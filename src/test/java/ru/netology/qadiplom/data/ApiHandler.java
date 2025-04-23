@@ -21,12 +21,12 @@ public class ApiHandler {
                 .build();
 
         public static String sendValidRequest (){
-            Map <String, String> dataForRequest= new HashMap<>();
-            dataForRequest.put("number", "4444 4444 4444 4441");
+//            Map <String, String> dataForRequest= new HashMap<>();
+//            dataForRequest.put("number", "4444 4444 4444 4441");
 
             String statusRequest = given()
                     .spec(specification)
-                    .body(dataForRequest)
+                    .body(DataHandler.getApprovedCard())
                     .when()
                     .post("/api/v1/pay")
                     .then()
