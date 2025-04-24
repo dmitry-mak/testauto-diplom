@@ -109,4 +109,32 @@ public class ApiHandler {
         String result = sendRequest(CREDIT, DataHandler.getUnregisteredCard(), 500);
         return result;
     }
+
+    public static String sendPaymentRequestWithEmptyNumber() {
+        String result = sendRequest(PAYMENT, DataHandler.getFormWithEmptyNumber(), 500);
+        return result;
+    }
+
+    public static String sendPaymentRequestWithEmptyMonth() {
+        String result = sendRequest(PAYMENT, DataHandler.getFormWithEmptyMonth(), 500);
+        return result;
+    }
+
+    public static String sendPaymentRequestWithEmptyYear() {
+        String result = sendRequest(PAYMENT, DataHandler.getFormWithEmptyYear(), 500);
+        return result;
+    }
+
+    public static String sendPaymentRequestWithEmptyHolder() {
+        String result = sendRequest(PAYMENT, DataHandler.getFormWithEmptyHolder(), 500);
+        return result;
+    }
+
+    public static String sendPaymentRequestWithEmptyCvc() {
+        String result = sendRequest(PAYMENT, DataHandler.getFormWithEmptyCvc(), 500);
+        return result;
+    }
+
+
+
 }

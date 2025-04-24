@@ -28,6 +28,25 @@ public class DataHandler {
         return new CardInfo(getUnregisteredCardNumber(), getValidMonth(), getValidYear(), getValidEnHolder(), getCvc());
     }
 
+    public static CardInfo getFormWithEmptyNumber() {
+        return new CardInfo("", getValidMonth(), getValidYear(), getValidEnHolder(), getCvc());}
+
+    public static CardInfo getFormWithEmptyMonth() {
+        return new CardInfo(getApprovedCardNumber(), "", getValidYear(), getValidEnHolder(), getCvc());
+    }
+
+    public static CardInfo getFormWithEmptyYear() {
+        return new CardInfo(getApprovedCardNumber(), getValidMonth(), "", getValidEnHolder(), getCvc());
+    }
+
+    public static CardInfo getFormWithEmptyHolder() {
+        return new CardInfo(getApprovedCardNumber(), getValidMonth(), getValidYear(), "", getCvc());
+    }
+
+    public static CardInfo getFormWithEmptyCvc() {
+        return new CardInfo(getApprovedCardNumber(), getValidMonth(), getValidYear(), getValidEnHolder(), "");
+    }
+
     private static String getApprovedCardNumber() {
         return "4444 4444 4444 4441";
     }
