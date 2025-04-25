@@ -2,7 +2,6 @@ package ru.netology.qadiplom.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.qadiplom.data.DataHandler;
 import ru.netology.qadiplom.page.MainPage;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -17,33 +16,45 @@ public class PaymentTest {
         open("http://localhost:8080/");
         mainPage = new MainPage();
     }
+
     @Test
     public void shouldPayWithValidApprovedCard() {
-        var cardInfo = DataHandler.getApprovedCard();
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendFormWithValidApprovedCard();
     }
 
     //           BUG
 //
-//    @Test public void shouldGetErrorNotificationWithDeclinedCard() {
+//    @Test public void shouldGetErrorPayNotificationWithDeclinedCard() {
 //
 //        var paymentPage = mainPage.navigateToPaymentPage();
 //        paymentPage.sendFormWithDeclinedCard();
 //    }
 
     @Test
-    public void shouldGetErrorNotificationForUnregisteredCard() {
-        var cardInfo = DataHandler.getUnregisteredCard();
+    public void shouldGetErrorPayNotificationForUnregisteredCard() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendFormWithInvalidCard();
     }
 
     @Test
-    public void shouldCreditWithValidApprovedCard(){
-        var cardInfo = DataHandler.getApprovedCard();
+    public void shouldCreditWithValidApprovedCard() {
         var creditPage = mainPage.navigateToCreditPage();
         creditPage.sendFormWithValidApprovedCard();
+    }
+
+//    BUG
+//
+//    @Test
+//    public void shouldGetErrorCreditNotificationForDeclinedCard(){
+//        var creditPage = mainPage.navigateToCreditPage();
+//        creditPage.sendFormWithDeclinedCard();
+//    }
+
+    @Test
+    public void shouldGetErrorCreditNotificationForUnregisteredCard(){
+        var creditPage = mainPage.navigateToCreditPage();
+        creditPage.sendFormWithInvalidCard();
     }
 
 }

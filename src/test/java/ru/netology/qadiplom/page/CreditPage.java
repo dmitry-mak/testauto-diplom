@@ -2,6 +2,7 @@ package ru.netology.qadiplom.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.Keys;
 import ru.netology.qadiplom.data.DataHandler;
 
 import java.time.Duration;
@@ -33,12 +34,21 @@ public class CreditPage {
         buttonContinue.click();
         successNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
+
     public void sendFormWithInvalidCard() {
         fillFormWithValidApprovedCard(DataHandler.getApprovedCard());
-        cardNumberField.doubleClick();
+        cardNumberField.contextClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
         cardNumberField.setValue(DataHandler.getUnregisteredCard().getNumber());
         buttonContinue.click();
-        errorNotification.shouldBe(Condition.visible);
+        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
+    }
+
+    public void sendFormWithDeclinedCard() {
+        fillFormWithValidApprovedCard(DataHandler.getApprovedCard());
+        cardNumberField.contextClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
+        cardNumberField.setValue(DataHandler.getDeclinedCard().getNumber());
+        buttonContinue.click();
+        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
     public void fillFormWithValidApprovedCard(DataHandler.CardInfo cardInfo) {

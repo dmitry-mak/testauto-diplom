@@ -71,13 +71,13 @@ public class ApiTest {
 
 
 //    @Test
-   @AfterAll
-    public static void sqlConnectionTest() {
-        System.out.println("LAST TRANSACTION ID: " + SqlHandler.getLastTransactionId());
-    }
-
-//    @AfterAll
-//    public static void cleanAllTables() {
-//        SqlHandler.cleanAllTables();
+//   @AfterAll
+//    public static void sqlConnectionTest() {
+//        System.out.println("LAST TRANSACTION ID: " + SqlHandler.getLastTransactionId());
 //    }
+
+    @AfterAll
+    public static void cleanAllTables() {
+        SqlHandler.cleanAllTables();
+    }
 }

@@ -61,16 +61,4 @@ public class PaymentPage {
 //        buttonContinue.click();
 //        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
-
-
-
-    public void fillFormWithDeclinedCard(DataHandler.CardInfo cardInfo) {
-        cardNumberField.setValue(DataHandler.getDeclinedCard().getNumber());
-        monthField.setValue(cardInfo.getMonth());
-        yearField.setValue(cardInfo.getYear());
-        holderField.setValue(cardInfo.getHolder());
-        cvvField.setValue(cardInfo.getCvc());
-        buttonContinue.click();
-        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
-    }
 }
