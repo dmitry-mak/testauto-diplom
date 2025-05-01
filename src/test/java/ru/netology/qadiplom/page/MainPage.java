@@ -12,12 +12,14 @@ public class MainPage {
 
 
     public PaymentPage navigateToPaymentPage() {
-        buyButton.click();
+//        buyButton.click();
+        PageElements.BUY_BUTTON.click();
         return new PaymentPage();
     }
 
     public CreditPage navigateToCreditPage() {
-        creditButton.click();
+//        creditButton.click();
+        PageElements.CREDIT_BUTTON.click();
         return new CreditPage();
     }
 
