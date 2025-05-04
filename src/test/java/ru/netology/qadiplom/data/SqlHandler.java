@@ -31,6 +31,20 @@ public class SqlHandler {
     }
 
     @SneakyThrows
+    public static String getPaymentStatus(){
+        var sqlQuery = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1;";
+        var connection = getConnection();
+        return runner.query(connection, sqlQuery, new ScalarHandler<>());
+    }
+
+    @SneakyThrows
+    public static String getCreditStatus(){
+        var sqlQuery = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
+        var connection = getConnection();
+        return runner.query(connection, sqlQuery, new ScalarHandler<>());
+    }
+
+    @SneakyThrows
     public static void cleanAllTables() {
         var runner = new QueryRunner();
         var deletePaymentEntityTable = "DELETE FROM payment_entity;";

@@ -10,6 +10,8 @@ import ru.netology.qadiplom.page.MainPage;
 import ru.netology.qadiplom.page.PageElements;
 import ru.netology.qadiplom.page.PaymentPage;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -40,13 +42,11 @@ public class WebUITest {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendEmptyForm();
 
-        assertAll(
-                () -> PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible),
+        assertAll(() -> PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible),
                 () -> PageElements.MONTH_ERROR.shouldBe(Condition.visible),
                 () -> PageElements.YEAR_ERROR.shouldBe(Condition.visible),
                 () -> PageElements.HOLDER_ERROR.shouldBe(Condition.visible),
-                () -> PageElements.CVV_ERROR.shouldBe(Condition.visible)
-        );
+                () -> PageElements.CVV_ERROR.shouldBe(Condition.visible));
     }
 
     //    Отправка формы оплаты с пустым полем "Месяц"
@@ -151,6 +151,41 @@ public class WebUITest {
 //        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
 //    }
 
+    //    Ввод в поле "Владелец" двойной фамилии через дефис
+    @Test
+    public void shouldProcessValidHolderWithHyphen() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+        PageElements.HOLDER_FIELD.setValue(DataHandler.getValidHolderWithHyphen());
+        paymentPage.sendEmptyForm();
+        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+    }
+
+//      BUG
+//
+//    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
+//    @Test
+//    public void shouldLimitLongHolder() {
+//        var paymentPage = mainPage.navigateToPaymentPage();
+//        paymentPage.fillFormWithValidApprovedCard();
+//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+//        PageElements.HOLDER_FIELD.setValue(DataHandler.getLongHolder());
+//        int actualFieldLength = PageElements.HOLDER_FIELD.getValue().length();
+//        Assertions.assertEquals(DataHandler.getLongHolder().length() - 1, actualFieldLength);
+//    }
+
+    //     Ввод в поле "Владелец" значения менее 2 букв
+    @Test
+    public void shouldShowErrorMessageForShotHolder() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+        PageElements.HOLDER_FIELD.setValue(DataHandler.getShortHolder());
+        paymentPage.sendEmptyForm();
+        PageElements.HOLDER_FIELD.shouldBe(Condition.visible);
+    }
+
     //    Ввод значения месяца из прошедшего периода (текущий год, месяц меньше текущего)
     @Test
     public void shouldShowErrorMessageForPastMonth() {
@@ -176,6 +211,30 @@ public class WebUITest {
         Assertions.assertEquals(0, actualFieldLength.length());
     }
 
+    //    Ввод значения больше 12 в поле "Месяц"
+    @Test
+    public void shouldShowErrorMessageForInvalidMonth() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.MONTH_FIELD);
+        PageElements.MONTH_FIELD.setValue(DataHandler.getInvalidMonth());
+        paymentPage.sendEmptyForm();
+        PageElements.MONTH_ERROR.shouldBe(Condition.visible);
+    }
+
+//    BUG
+//
+//    Ввод значения меньше 1 в поле "Месяц"
+//    @Test
+//    public void shouldShowErrorMessageForMonthBelowOne() {
+//        var paymentPage = mainPage.navigateToPaymentPage();
+//        paymentPage.fillFormWithValidApprovedCard();
+//        paymentPage.cleanField(PageElements.MONTH_FIELD);
+//        PageElements.MONTH_FIELD.setValue(DataHandler.getShortMonth());
+//        paymentPage.sendEmptyForm();
+//        PageElements.MONTH_ERROR.shouldBe(Condition.visible);
+//    }
+
     //    Ввод значения года из прошедшего периода
     @Test
     public void shouldShowErrorMessageForPastYear() {
@@ -187,7 +246,7 @@ public class WebUITest {
         PageElements.YEAR_ERROR.shouldBe(Condition.visible);
     }
 
-//    Ввод значения года на 5 или более лет больше текущего
+    //    Ввод значения года на 5 или более лет больше текущего
     @Test
     public void shouldShowErrorMessageForFutureYears() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -198,7 +257,7 @@ public class WebUITest {
         PageElements.YEAR_ERROR.shouldBe(Condition.visible);
     }
 
-//    Ввод не цифровых значений в поле "Год"
+    //    Ввод не цифровых значений в поле "Год"
     @Test
     public void shouldShowErrorMessageForLettersInYear() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -209,6 +268,28 @@ public class WebUITest {
         String actualFieldLength = PageElements.YEAR_FIELD.getValue();
         Assertions.assertEquals(0, actualFieldLength.length());
     }
+
+    @Test
+    public void shouldShowErrorMessageForShortYear() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.YEAR_FIELD);
+        PageElements.YEAR_FIELD.setValue(DataHandler.getShortYear());
+        paymentPage.sendEmptyForm();
+        PageElements.YEAR_ERROR.shouldBe(Condition.visible);
+    }
+
+//    Ввод в поле "Год" более 2 цифр
+    @Test
+    public void shouldLimitYearFieldWithTwoDigits() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.YEAR_FIELD);
+        PageElements.YEAR_FIELD.setValue(DataHandler.getLongYear());
+        String actualFieldLength = PageElements.YEAR_FIELD.getValue();
+        Assertions.assertEquals(DataHandler.getLongYear().length() - 1, actualFieldLength.length());
+    }
+
     @Test
     public void shouldShowErrorMessageForLettersInCVC() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -217,6 +298,17 @@ public class WebUITest {
         PageElements.CVV_FIELD.setValue(DataHandler.getLettersCVC());
         paymentPage.sendEmptyForm();
         PageElements.CVV_ERROR.shouldBe(Condition.visible);
+    }
+
+    @Test
+    public void shouldLimitLongCVC() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.CVV_FIELD);
+        PageElements.CVV_FIELD.setValue(DataHandler.getLongCvc());
+//        paymentPage.sendEmptyForm();
+        String actualFieldLength = PageElements.CVV_FIELD.getValue();
+        Assertions.assertEquals(actualFieldLength.length(), DataHandler.getLongCvc().length() - 1);
     }
 
     @Test

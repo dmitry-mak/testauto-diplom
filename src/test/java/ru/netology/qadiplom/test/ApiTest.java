@@ -45,7 +45,18 @@ public class ApiTest {
         Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyNumber());
     }
 
-    /*
+    //    Отправка пустого POST запроса на оплату картой
+    @Test
+    public void shouldSendPaymentRequestWithEmptyJSON() {
+        Assertions.assertEquals("500", ApiHandler.sendEmptyPaymentRequest());
+    }
+
+    //    Отправка пустого POST запроса на оплату кредитом
+    @Test
+    public void shouldSendCreditRequestWithEmptyJSON() {
+        Assertions.assertEquals("500", ApiHandler.sendEmptyCreditRequest());
+    }
+/*
     //    Должен возвращать код ошибки 500 если отослать запрос на оплату с пустым полем month
     @Test
     public void shouldSendPaymentRequestWithEmptyMonth() {
@@ -67,14 +78,8 @@ public class ApiTest {
         Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyCvc());
     }
 
-     */
 
-
-//    @Test
-//   @AfterAll
-//    public static void sqlConnectionTest() {
-//        System.out.println("LAST TRANSACTION ID: " + SqlHandler.getLastTransactionId());
-//    }
+ */
 
     @AfterAll
     public static void cleanAllTables() {

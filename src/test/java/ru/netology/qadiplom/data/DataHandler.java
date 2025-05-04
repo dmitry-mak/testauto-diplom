@@ -92,6 +92,19 @@ public class DataHandler {
         return firstName + symbol + lastName;
     }
 
+    public static String getValidHolderWithHyphen() {
+        return faker.name().fullName().replace(" ", "-");
+    }
+
+    public static String getLongHolder() {
+        return faker.regexify("[a-zA-Z]{22}");
+    }
+
+    public static String getShortHolder() {
+        return faker.letterify("#");
+    }
+
+
     private static String getValidYear() {
         return LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("yy"));
     }
@@ -112,6 +125,14 @@ public class DataHandler {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("yy"));
     }
 
+    public static String getShortYear() {
+        return String.valueOf(faker.numerify("#"));
+    }
+
+    public static String getLongYear() {
+        return String.valueOf(faker.numerify("###"));
+    }
+
     private static String getValidMonth() {
         return LocalDate.now().plusMonths(2).format(DateTimeFormatter.ofPattern("MM"));
     }
@@ -124,6 +145,14 @@ public class DataHandler {
         return String.valueOf(faker.letterify("##"));
     }
 
+    public static String getShortMonth() {
+        return "00";
+    }
+
+    public static String getInvalidMonth() {
+        return String.valueOf(13);
+    }
+
 
     private static String getCvc() {
 //        return faker.number().digits(3);
@@ -132,12 +161,15 @@ public class DataHandler {
     }
 
     public static String getLettersCVC() {
-
         return String.valueOf(faker.letterify("###"));
     }
 
     public static String getShortCvc() {
         return String.valueOf(faker.numerify("##"));
+    }
+
+    public static String getLongCvc() {
+        return String.valueOf(faker.numerify("####"));
     }
 
 
@@ -151,6 +183,4 @@ public class DataHandler {
         String holder;
         String cvc;
     }
-
-
 }

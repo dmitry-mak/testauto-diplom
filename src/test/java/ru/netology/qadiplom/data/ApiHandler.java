@@ -135,6 +135,17 @@ public class ApiHandler {
         return result;
     }
 
+    public static String sendEmptyPaymentRequest() {
+        String emptyJson = "{}";
+        String result = sendRequest(PAYMENT, emptyJson, 500);
 
+        return result;
+    }
+
+    public static String sendEmptyCreditRequest() {
+        String emptyJson = "{}";
+        String result = sendRequest(CREDIT, emptyJson, 500);
+        return result;
+    }
 
 }

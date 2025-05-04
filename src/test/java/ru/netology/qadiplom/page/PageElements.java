@@ -26,13 +26,13 @@ public class PageElements {
 
     public static final SelenideElement HEADER_CREDIT = $(byText("Кредит по данным карты"));
     public static final SelenideElement HEADER_PAYMENT = $(byText("Оплата по карте"));
+    public static final SelenideElement HEADER_MAINPAGE = $$(".heading").findBy(text("Путешествие дня"));
 
     public static final SelenideElement CARD_NUMBER_ERROR = $$(".input_invalid").findBy(text("Номер карты")).$(".input__sub");
     public static final SelenideElement MONTH_ERROR = $$(".input_invalid").findBy(text("Месяц")).$(".input__sub");
     public static final SelenideElement YEAR_ERROR = $$(".input_invalid").findBy(text("Год")).$(".input__sub");
     public static final SelenideElement HOLDER_ERROR = $$(".input_invalid").findBy(text("Владелец")).$(".input__sub");
     public static final SelenideElement CVV_ERROR = $$(".input_invalid").findBy(text("CVC/CVV")).$(".input__sub");
-
 
 
     public PageElements() {

@@ -1,14 +1,15 @@
 package ru.netology.qadiplom.test;
 
 import com.codeborne.selenide.Condition;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import ru.netology.qadiplom.data.SqlHandler;
 import ru.netology.qadiplom.page.MainPage;
 import ru.netology.qadiplom.page.PageElements;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class PaymentTest {
 
@@ -21,11 +22,19 @@ public class PaymentTest {
         mainPage = new MainPage();
     }
 
+    @BeforeEach
+    void cleanTables() {
+        SqlHandler.cleanAllTables();
+    }
+
     @Test
     public void shouldPayWithValidApprovedCard() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendFormWithValidApprovedCard();
-        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+//        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+//        Assertions.assertEquals("APPROVED", SqlHandler.getPaymentStatus());
+        assertAll(() -> PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
+                () -> Assertions.assertEquals("APPROVED", SqlHandler.getPaymentStatus()));
     }
 
 //               BUG
@@ -35,7 +44,9 @@ public class PaymentTest {
 //
 //        var paymentPage = mainPage.navigateToPaymentPage();
 //        paymentPage.sendFormWithDeclinedCard();
-//        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+//        assertAll(
+//                () -> PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
+//                () -> Assertions.assertEquals("DECLINED", SqlHandler.getPaymentStatus()));
 //    }
 
     @Test
@@ -49,23 +60,25 @@ public class PaymentTest {
     public void shouldCreditWithValidApprovedCard() {
         var creditPage = mainPage.navigateToCreditPage();
         creditPage.sendFormWithValidApprovedCard();
-        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+        assertAll(() -> PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
+                () -> Assertions.assertEquals("APPROVED", SqlHandler.getCreditStatus()));
     }
 
 //   BUG
 //
 //    @Test
-//    public void shouldGetErrorCreditNotificationForDeclinedCard(){
+//    public void shouldGetErrorCreditNotificationForDeclinedCard() {
 //        var creditPage = mainPage.navigateToCreditPage();
 //        creditPage.sendFormWithDeclinedCard();
-//        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+//        assertAll(
+//                () -> PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
+//                () -> Assertions.assertEquals("DECLINED", SqlHandler.getCreditStatus()));
 //    }
 
     @Test
-    public void shouldGetErrorCreditNotificationForUnregisteredCard(){
+    public void shouldGetErrorCreditNotificationForUnregisteredCard() {
         var creditPage = mainPage.navigateToCreditPage();
         creditPage.sendFormWithInvalidCard();
         PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
-
 }
