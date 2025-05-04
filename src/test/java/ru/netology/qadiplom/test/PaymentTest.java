@@ -31,8 +31,6 @@ public class PaymentTest {
     public void shouldPayWithValidApprovedCard() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendFormWithValidApprovedCard();
-//        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
-//        Assertions.assertEquals("APPROVED", SqlHandler.getPaymentStatus());
         assertAll(() -> PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
                 () -> Assertions.assertEquals("APPROVED", SqlHandler.getPaymentStatus()));
     }

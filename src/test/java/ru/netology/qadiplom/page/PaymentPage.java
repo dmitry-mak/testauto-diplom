@@ -34,58 +34,35 @@ public class PaymentPage {
 //    private final PageElements pageElement = new PageElements();
 
     public PaymentPage() {
-//        headerPayment.shouldBe(Condition.visible);
         PageElements.HEADER_PAYMENT.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
     public void sendFormWithValidApprovedCard() {
         fillFormWithValidApprovedCard(DataHandler.getApprovedCard());
-//        buttonContinue.click();
         PageElements.CONTINUE_BUTTON.click();
-//        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
-//        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
     public void sendFormWithInvalidCard() {
         fillFormWithValidApprovedCard(DataHandler.getApprovedCard());
-//        cardNumberField.contextClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-//        cleanField(cardNumberField);
         cleanField(PageElements.CARD_NUMBER_FIELD);
-//        cardNumberField.setValue(DataHandler.getUnregisteredCard().getNumber());
         PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getUnregisteredCard().getNumber());
-//        buttonContinue.click();
         PageElements.CONTINUE_BUTTON.click();
-//        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
-//        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
     public void sendFormWithDeclinedCard() {
         fillFormWithValidApprovedCard(DataHandler.getApprovedCard());
-//        cardNumberField.contextClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-//        cleanField(cardNumberField);
         cleanField(PageElements.CARD_NUMBER_FIELD);
-//        cardNumberField.setValue(DataHandler.getDeclinedCard().getNumber());
         PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getDeclinedCard().getNumber());
-//        buttonContinue.click();
         PageElements.CONTINUE_BUTTON.click();
-//        errorNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
-//        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
 //    Заполнение полей формы данными объекта CardInfo
     public void fillFormWithValidApprovedCard(DataHandler.CardInfo cardInfo) {
-//        cardNumberField.setValue(cardInfo.getNumber());
         PageElements.CARD_NUMBER_FIELD.setValue(cardInfo.getNumber());
-//        monthField.setValue(cardInfo.getMonth());
         PageElements.MONTH_FIELD.setValue(cardInfo.getMonth());
-//        yearField.setValue(cardInfo.getYear());
         PageElements.YEAR_FIELD.setValue(cardInfo.getYear());
-//        holderField.setValue(cardInfo.getHolder());
         PageElements.HOLDER_FIELD.setValue(cardInfo.getHolder());
-//        cvvField.setValue(cardInfo.getCvc());
         PageElements.CVV_FIELD.setValue(cardInfo.getCvc());
-//        buttonContinue.click();
-//        successNotification.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
 
 //    перегруженный метод без параметров. Удобней использовать при тестировании интерфейса и полей

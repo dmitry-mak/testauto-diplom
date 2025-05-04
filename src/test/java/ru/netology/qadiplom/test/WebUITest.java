@@ -1,14 +1,13 @@
 package ru.netology.qadiplom.test;
 
 import com.codeborne.selenide.Condition;
-import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.qadiplom.data.DataHandler;
 import ru.netology.qadiplom.page.MainPage;
 import ru.netology.qadiplom.page.PageElements;
-import ru.netology.qadiplom.page.PaymentPage;
+
 
 import java.time.Duration;
 
@@ -21,7 +20,6 @@ public class WebUITest {
 
     @BeforeEach
     void openMainPage() {
-//        mainPage = open("http://localhost:8080/", MainPage.class);
         open("http://localhost:8080/");
         mainPage = new MainPage();
     }
@@ -29,8 +27,6 @@ public class WebUITest {
     @Test
     public void shouldShowErrorMessageForEmptyNumber() {
         var paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.sendFormWithEmptyCard();
-//        PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible);
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
         paymentPage.sendEmptyForm();
@@ -102,8 +98,6 @@ public class WebUITest {
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
         PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getLongCardNumber());
-//        paymentPage.sendEmptyForm();
-//        PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible);
         String actualFieldLength = PageElements.CARD_NUMBER_FIELD.getValue();
         Assertions.assertEquals(actualFieldLength.length(), DataHandler.getLongCardNumber().length() - 2);
     }
@@ -264,7 +258,6 @@ public class WebUITest {
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.YEAR_FIELD);
         PageElements.YEAR_FIELD.setValue(DataHandler.getLettersYear());
-//        paymentPage.sendEmptyForm();
         String actualFieldLength = PageElements.YEAR_FIELD.getValue();
         Assertions.assertEquals(0, actualFieldLength.length());
     }
@@ -306,7 +299,6 @@ public class WebUITest {
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CVV_FIELD);
         PageElements.CVV_FIELD.setValue(DataHandler.getLongCvc());
-//        paymentPage.sendEmptyForm();
         String actualFieldLength = PageElements.CVV_FIELD.getValue();
         Assertions.assertEquals(actualFieldLength.length(), DataHandler.getLongCvc().length() - 1);
     }

@@ -155,8 +155,6 @@ public class DataHandler {
 
 
     private static String getCvc() {
-//        return faker.number().digits(3);
-//        return faker.numerify("###");
         return String.valueOf(faker.numerify("###"));
     }
 

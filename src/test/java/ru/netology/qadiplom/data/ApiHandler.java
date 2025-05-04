@@ -59,8 +59,6 @@ public class ApiHandler {
                 .then()
                 .statusCode(500)
                 .extract()
-//                .response()
-//                .asString();
                 .path("status").toString();
 
         return statusRequest;
