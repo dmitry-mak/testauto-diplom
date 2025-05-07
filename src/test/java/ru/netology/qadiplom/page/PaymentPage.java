@@ -13,26 +13,6 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class PaymentPage {
 
-    //    private final SelenideElement cardNumberField = $(".input__control").shouldHave(Condition.attribute("placeholder", "0000 0000 0000 0000"));
-    private final SelenideElement cardNumberField = $("input[placeholder='0000 0000 0000 0000']");
-    //    private final SelenideElement monthField = $(".input__control").shouldHave(Condition.attribute("placeholder", "08"));
-    //    private final SelenideElement monthField = $("input[placeholder='08']");
-    private final SelenideElement monthField = $(byText("Месяц")).parent().$(".input__control");
-    //    private final SelenideElement yearField = $("input[placeholder='22']");
-    private final SelenideElement yearField = $(byText("Год")).parent().$(".input__control");
-    private final SelenideElement holderField = $(byText("Владелец")).parent().$(".input__control");
-    //    private final SelenideElement cvvField = $("input[placeholder='999']");
-    private final SelenideElement cvvField = $(byText("CVC/CVV")).parent().$(".input__control");
-    private final SelenideElement headerPayment = $(byText("Оплата по карте"));
-    private final SelenideElement buttonContinue = $$(".button").get(2).shouldHave(Condition.text("Продолжить"));
-    //    private final SelenideElement buttonContinue =  $(byText("Продолжить")).shouldBe(Condition.visible);
-    private final SelenideElement successNotification = $(".notification.notification_status_ok");
-    private final SelenideElement errorNotification = $(".notification.notification_status_error");
-
-    private final SelenideElement invalidCardNumber = $("");
-
-//    private final PageElements pageElement = new PageElements();
-
     public PaymentPage() {
         PageElements.HEADER_PAYMENT.shouldBe(Condition.visible, Duration.ofSeconds(10));
     }
@@ -56,7 +36,7 @@ public class PaymentPage {
         PageElements.CONTINUE_BUTTON.click();
     }
 
-//    Заполнение полей формы данными объекта CardInfo
+    //    Заполнение полей формы данными объекта CardInfo
     public void fillFormWithValidApprovedCard(DataHandler.CardInfo cardInfo) {
         PageElements.CARD_NUMBER_FIELD.setValue(cardInfo.getNumber());
         PageElements.MONTH_FIELD.setValue(cardInfo.getMonth());
@@ -65,8 +45,8 @@ public class PaymentPage {
         PageElements.CVV_FIELD.setValue(cardInfo.getCvc());
     }
 
-//    перегруженный метод без параметров. Удобней использовать при тестировании интерфейса и полей
-    public void fillFormWithValidApprovedCard(){
+    //    перегруженный метод без параметров. Удобней использовать при тестировании интерфейса и полей
+    public void fillFormWithValidApprovedCard() {
         PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getApprovedCard().getNumber());
         PageElements.MONTH_FIELD.setValue(DataHandler.getApprovedCard().getMonth());
         PageElements.YEAR_FIELD.setValue(DataHandler.getApprovedCard().getYear());
@@ -78,6 +58,7 @@ public class PaymentPage {
     public void sendEmptyForm() {
         PageElements.CONTINUE_BUTTON.click();
     }
+
     public void cleanField(SelenideElement field) {
         field.contextClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
     }

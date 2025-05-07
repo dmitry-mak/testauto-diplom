@@ -24,6 +24,7 @@ public class WebUITest {
         mainPage = new MainPage();
     }
 
+    //  Отправка формы оплаты с пустым полем "Номер карты"
     @Test
     public void shouldShowErrorMessageForEmptyNumber() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -32,6 +33,7 @@ public class WebUITest {
         paymentPage.sendEmptyForm();
         PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible);
     }
+
 
     @Test
     public void shouldShowMultipleErrorMessagesForEmptyForm() {
@@ -55,6 +57,7 @@ public class WebUITest {
         PageElements.MONTH_ERROR.shouldBe(Condition.visible);
     }
 
+    //    Отправка формы оплаты с пустым полем "Год"
     @Test
     public void shouldShowErrorMessageForEmptyYear() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -64,6 +67,7 @@ public class WebUITest {
         PageElements.YEAR_ERROR.shouldBe(Condition.visible);
     }
 
+    //    Отправка формы оплаты с пустым полем "Владелец"
     @Test
     public void shouldShowErrorMessageForEmptyHolder() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -73,6 +77,7 @@ public class WebUITest {
         PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
     }
 
+    //    Отправка формы оплаты с пустым полем "CVC/CVV"
     @Test
     public void shouldShowErrorMessageForEmptyCvc() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -82,6 +87,7 @@ public class WebUITest {
         PageElements.CVV_ERROR.shouldBe(Condition.visible);
     }
 
+    //   Ввод менее 16 символов в поле "Номер карты"
     @Test
     public void shouldShowErrorMessageForShortCardNumber() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -92,6 +98,7 @@ public class WebUITest {
         PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible);
     }
 
+    //    Ввод более 16 символов в поле "Номер карты"
     @Test
     public void shouldLimitCardNumberLength() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -102,7 +109,7 @@ public class WebUITest {
         Assertions.assertEquals(actualFieldLength.length(), DataHandler.getLongCardNumber().length() - 2);
     }
 
-
+    //    Ввод символов или букв в поле "Номер карты"
     @Test
     public void shouldShowErrorMessageForLettersInCardNumber() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -121,8 +128,7 @@ public class WebUITest {
 
     }
 
-//    BUG
-//
+//    Ввод в поле "Владелец" значений буквами не латинского алфавита
 //    @Test
 //    public void shouldShowErrorMessageForInvalidHolder() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
@@ -133,8 +139,7 @@ public class WebUITest {
 //        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
 //    }
 
-//  BUG
-//
+//    Ввод в поле "Владелец" значения с использованием специальных символов, исключая дефис
 //    @Test
 //    public void shouldShowErrorMessageForSymbolsInHolder() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
@@ -156,8 +161,6 @@ public class WebUITest {
         PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-//      BUG
-//
 //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
 //    @Test
 //    public void shouldLimitLongHolder() {
@@ -200,7 +203,6 @@ public class WebUITest {
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.MONTH_FIELD);
         PageElements.MONTH_FIELD.setValue(DataHandler.getLettersMonth());
-//        paymentPage.sendEmptyForm();
         String actualFieldLength = PageElements.MONTH_FIELD.getValue();
         Assertions.assertEquals(0, actualFieldLength.length());
     }
@@ -216,8 +218,6 @@ public class WebUITest {
         PageElements.MONTH_ERROR.shouldBe(Condition.visible);
     }
 
-//    BUG
-//
 //    Ввод значения меньше 1 в поле "Месяц"
 //    @Test
 //    public void shouldShowErrorMessageForMonthBelowOne() {
@@ -262,6 +262,7 @@ public class WebUITest {
         Assertions.assertEquals(0, actualFieldLength.length());
     }
 
+    //    Ввод в поле "Год" менее 2 цифр
     @Test
     public void shouldShowErrorMessageForShortYear() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -272,7 +273,7 @@ public class WebUITest {
         PageElements.YEAR_ERROR.shouldBe(Condition.visible);
     }
 
-//    Ввод в поле "Год" более 2 цифр
+    //    Ввод в поле "Год" более 2 цифр
     @Test
     public void shouldLimitYearFieldWithTwoDigits() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -283,6 +284,7 @@ public class WebUITest {
         Assertions.assertEquals(DataHandler.getLongYear().length() - 1, actualFieldLength.length());
     }
 
+    //    Ввод не цифровых значений в поле "CVC/CVV"
     @Test
     public void shouldShowErrorMessageForLettersInCVC() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -293,6 +295,7 @@ public class WebUITest {
         PageElements.CVV_ERROR.shouldBe(Condition.visible);
     }
 
+    //    Ввод в поле "CVC/CVV" значения более 3 цифр
     @Test
     public void shouldLimitLongCVC() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -303,6 +306,7 @@ public class WebUITest {
         Assertions.assertEquals(actualFieldLength.length(), DataHandler.getLongCvc().length() - 1);
     }
 
+    //    Ввод в поле "CVC/CVV" значения менее 3 цифр
     @Test
     public void shouldShowErrorMessageForShortCVC() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -313,4 +317,15 @@ public class WebUITest {
         PageElements.CVV_ERROR.shouldBe(Condition.visible);
     }
 
+//    @Test
+//    public void shouldShowOnlyErrorNotificationForDeclinedCard() {
+//        var paymentPage = mainPage.navigateToPaymentPage();
+//        paymentPage.fillFormWithValidApprovedCard();
+//        paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
+//        PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getUnregisteredCard().getNumber());
+//        paymentPage.sendEmptyForm();
+//        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+//        PageElements.CLOSE_NOTIFICATION_BUTTON.click();
+//        PageElements.SUCCESS_NOTIFICATION.shouldNot(Condition.visible);
+//    }
 }

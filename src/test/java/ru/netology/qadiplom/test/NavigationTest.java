@@ -29,13 +29,13 @@ public class NavigationTest {
                 () -> PageElements.HEADER_MAINPAGE.shouldBe(Condition.visible));
 
     }
-
+    // Переход к форме оплаты картой
     @Test
     public void shouldOpenPaymentPage() {
         mainPage.navigateToPaymentPage();
     }
 
-
+    // Переход к форме оплаты в кредит
     @Test
     public void shouldOpenCreditPage() {
         mainPage.navigateToCreditPage();

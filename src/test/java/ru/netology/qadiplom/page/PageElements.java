@@ -18,11 +18,11 @@ public class PageElements {
 
     public static final SelenideElement BUY_BUTTON = $(".button:not(.button_view_extra)").shouldBe(Condition.visible);
     public static final SelenideElement CREDIT_BUTTON = $(".button_view_extra").shouldBe(Condition.visible);
-    //    public static final SelenideElement CONTINUE_BUTTON = $$(".button").get(2).shouldBe(Condition.text("Продолжить"));
     public static final SelenideElement CONTINUE_BUTTON = $$(".button").findBy(text("Продолжить"));
 
     public static final SelenideElement SUCCESS_NOTIFICATION = $(".notification.notification_status_ok");
     public static final SelenideElement ERROR_NOTIFICATION = $(".notification.notification_status_error");
+    public static final SelenideElement CLOSE_NOTIFICATION_BUTTON = $(".notification_status_error .notification__closer");
 
     public static final SelenideElement HEADER_CREDIT = $(byText("Кредит по данным карты"));
     public static final SelenideElement HEADER_PAYMENT = $(byText("Оплата по карте"));

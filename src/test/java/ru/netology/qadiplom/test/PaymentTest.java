@@ -17,7 +17,6 @@ public class PaymentTest {
 
     @BeforeEach
     void openMainPage() {
-//        mainPage = open("http://localhost:8080/", MainPage.class);
         open("http://localhost:8080/");
         mainPage = new MainPage();
     }
@@ -35,8 +34,6 @@ public class PaymentTest {
                 () -> Assertions.assertEquals("APPROVED", SqlHandler.getPaymentStatus()));
     }
 
-//               BUG
-//
 //    @Test
 //    public void shouldGetErrorPayNotificationWithDeclinedCard() {
 //
@@ -62,8 +59,6 @@ public class PaymentTest {
                 () -> Assertions.assertEquals("APPROVED", SqlHandler.getCreditStatus()));
     }
 
-//   BUG
-//
 //    @Test
 //    public void shouldGetErrorCreditNotificationForDeclinedCard() {
 //        var creditPage = mainPage.navigateToCreditPage();
