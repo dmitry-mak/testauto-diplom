@@ -24,17 +24,6 @@ public class WebUITest {
         mainPage = new MainPage();
     }
 
-    //  Отправка формы оплаты с пустым полем "Номер карты"
-    @Test
-    public void shouldShowErrorMessageForEmptyNumber() {
-        var paymentPage = mainPage.navigateToPaymentPage();
-        paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
-        paymentPage.sendEmptyForm();
-        PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible);
-    }
-
-
     @Test
     public void shouldShowMultipleErrorMessagesForEmptyForm() {
         var paymentPage = mainPage.navigateToPaymentPage();
@@ -47,44 +36,14 @@ public class WebUITest {
                 () -> PageElements.CVV_ERROR.shouldBe(Condition.visible));
     }
 
-    //    Отправка формы оплаты с пустым полем "Месяц"
+    //  Отправка формы оплаты с пустым полем "Номер карты"
     @Test
-    public void shouldShowErrorMessageForEmptyMonth() {
+    public void shouldShowErrorMessageForEmptyNumber() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.MONTH_FIELD);
+        paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
         paymentPage.sendEmptyForm();
-        PageElements.MONTH_ERROR.shouldBe(Condition.visible);
-    }
-
-    //    Отправка формы оплаты с пустым полем "Год"
-    @Test
-    public void shouldShowErrorMessageForEmptyYear() {
-        var paymentPage = mainPage.navigateToPaymentPage();
-        paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.YEAR_FIELD);
-        paymentPage.sendEmptyForm();
-        PageElements.YEAR_ERROR.shouldBe(Condition.visible);
-    }
-
-    //    Отправка формы оплаты с пустым полем "Владелец"
-    @Test
-    public void shouldShowErrorMessageForEmptyHolder() {
-        var paymentPage = mainPage.navigateToPaymentPage();
-        paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-        paymentPage.sendEmptyForm();
-        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
-    }
-
-    //    Отправка формы оплаты с пустым полем "CVC/CVV"
-    @Test
-    public void shouldShowErrorMessageForEmptyCvc() {
-        var paymentPage = mainPage.navigateToPaymentPage();
-        paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.CVV_FIELD);
-        paymentPage.sendEmptyForm();
-        PageElements.CVV_ERROR.shouldBe(Condition.visible);
+        PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible);
     }
 
     //   Ввод менее 16 символов в поле "Номер карты"
@@ -120,67 +79,25 @@ public class WebUITest {
         PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible);
     }
 
+    //    Отправка формы с полем "Номер карты", заполненным номером незарегистрированной карты
     @Test
     public void shouldShowErrorMessageForInvalidCardNumber() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
-
+        PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getUnregisteredCard().getNumber());
+        paymentPage.sendEmptyForm();
+        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-//    Ввод в поле "Владелец" значений буквами не латинского алфавита
-//    @Test
-//    public void shouldShowErrorMessageForInvalidHolder() {
-//        var paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.fillFormWithValidApprovedCard();
-//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-//        PageElements.HOLDER_FIELD.setValue(DataHandler.getInvalidRuHolder());
-//        paymentPage.sendEmptyForm();
-//        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
-//    }
-
-//    Ввод в поле "Владелец" значения с использованием специальных символов, исключая дефис
-//    @Test
-//    public void shouldShowErrorMessageForSymbolsInHolder() {
-//        var paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.fillFormWithValidApprovedCard();
-//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-//        PageElements.HOLDER_FIELD.setValue(DataHandler.getHolderWithSymbols());
-//        paymentPage.sendEmptyForm();
-//        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
-//    }
-
-    //    Ввод в поле "Владелец" двойной фамилии через дефис
+    //    Отправка формы оплаты с пустым полем "Месяц"
     @Test
-    public void shouldProcessValidHolderWithHyphen() {
+    public void shouldShowErrorMessageForEmptyMonth() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-        PageElements.HOLDER_FIELD.setValue(DataHandler.getValidHolderWithHyphen());
+        paymentPage.cleanField(PageElements.MONTH_FIELD);
         paymentPage.sendEmptyForm();
-        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
-    }
-
-//    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
-//    @Test
-//    public void shouldLimitLongHolder() {
-//        var paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.fillFormWithValidApprovedCard();
-//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-//        PageElements.HOLDER_FIELD.setValue(DataHandler.getLongHolder());
-//        int actualFieldLength = PageElements.HOLDER_FIELD.getValue().length();
-//        Assertions.assertEquals(DataHandler.getLongHolder().length() - 1, actualFieldLength);
-//    }
-
-    //     Ввод в поле "Владелец" значения менее 2 букв
-    @Test
-    public void shouldShowErrorMessageForShotHolder() {
-        var paymentPage = mainPage.navigateToPaymentPage();
-        paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-        PageElements.HOLDER_FIELD.setValue(DataHandler.getShortHolder());
-        paymentPage.sendEmptyForm();
-        PageElements.HOLDER_FIELD.shouldBe(Condition.visible);
+        PageElements.MONTH_ERROR.shouldBe(Condition.visible);
     }
 
     //    Ввод значения месяца из прошедшего периода (текущий год, месяц меньше текущего)
@@ -218,7 +135,7 @@ public class WebUITest {
         PageElements.MONTH_ERROR.shouldBe(Condition.visible);
     }
 
-//    Ввод значения меньше 1 в поле "Месяц"
+    //    Ввод значения меньше 1 в поле "Месяц"
 //    @Test
 //    public void shouldShowErrorMessageForMonthBelowOne() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
@@ -229,24 +146,12 @@ public class WebUITest {
 //        PageElements.MONTH_ERROR.shouldBe(Condition.visible);
 //    }
 
-    //    Ввод значения года из прошедшего периода
+    //    Отправка формы оплаты с пустым полем "Год"
     @Test
-    public void shouldShowErrorMessageForPastYear() {
+    public void shouldShowErrorMessageForEmptyYear() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.YEAR_FIELD);
-        PageElements.YEAR_FIELD.setValue(DataHandler.getExpiredYear());
-        paymentPage.sendEmptyForm();
-        PageElements.YEAR_ERROR.shouldBe(Condition.visible);
-    }
-
-    //    Ввод значения года на 5 или более лет больше текущего
-    @Test
-    public void shouldShowErrorMessageForFutureYears() {
-        var paymentPage = mainPage.navigateToPaymentPage();
-        paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.YEAR_FIELD);
-        PageElements.YEAR_FIELD.setValue(DataHandler.getFarFutureYear());
         paymentPage.sendEmptyForm();
         PageElements.YEAR_ERROR.shouldBe(Condition.visible);
     }
@@ -282,6 +187,103 @@ public class WebUITest {
         PageElements.YEAR_FIELD.setValue(DataHandler.getLongYear());
         String actualFieldLength = PageElements.YEAR_FIELD.getValue();
         Assertions.assertEquals(DataHandler.getLongYear().length() - 1, actualFieldLength.length());
+    }
+
+    //    Ввод значения года из прошедшего периода
+    @Test
+    public void shouldShowErrorMessageForPastYear() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.YEAR_FIELD);
+        PageElements.YEAR_FIELD.setValue(DataHandler.getExpiredYear());
+        paymentPage.sendEmptyForm();
+        PageElements.YEAR_ERROR.shouldBe(Condition.visible);
+    }
+
+    //    Ввод значения года на 5 или более лет больше текущего
+    @Test
+    public void shouldShowErrorMessageForFutureYears() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.YEAR_FIELD);
+        PageElements.YEAR_FIELD.setValue(DataHandler.getFarFutureYear());
+        paymentPage.sendEmptyForm();
+        PageElements.YEAR_ERROR.shouldBe(Condition.visible);
+    }
+
+    //    Отправка формы оплаты с пустым полем "Владелец"
+    @Test
+    public void shouldShowErrorMessageForEmptyHolder() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+        paymentPage.sendEmptyForm();
+        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
+    }
+
+    //    Ввод в поле "Владелец" значений буквами не латинского алфавита
+//    @Test
+//    public void shouldShowErrorMessageForInvalidHolder() {
+//        var paymentPage = mainPage.navigateToPaymentPage();
+//        paymentPage.fillFormWithValidApprovedCard();
+//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+//        PageElements.HOLDER_FIELD.setValue(DataHandler.getInvalidRuHolder());
+//        paymentPage.sendEmptyForm();
+//        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
+//    }
+
+    //    Ввод в поле "Владелец" значения с использованием специальных символов, исключая дефис
+//    @Test
+//    public void shouldShowErrorMessageForSymbolsInHolder() {
+//        var paymentPage = mainPage.navigateToPaymentPage();
+//        paymentPage.fillFormWithValidApprovedCard();
+//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+//        PageElements.HOLDER_FIELD.setValue(DataHandler.getHolderWithSymbols());
+//        paymentPage.sendEmptyForm();
+//        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
+//    }
+
+    //    Ввод в поле "Владелец" двойной фамилии через дефис
+    @Test
+    public void shouldProcessValidHolderWithHyphen() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+        PageElements.HOLDER_FIELD.setValue(DataHandler.getValidHolderWithHyphen());
+        paymentPage.sendEmptyForm();
+        PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+    }
+
+    //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
+//    @Test
+//    public void shouldLimitLongHolder() {
+//        var paymentPage = mainPage.navigateToPaymentPage();
+//        paymentPage.fillFormWithValidApprovedCard();
+//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+//        PageElements.HOLDER_FIELD.setValue(DataHandler.getLongHolder());
+//        int actualFieldLength = PageElements.HOLDER_FIELD.getValue().length();
+//        Assertions.assertEquals(DataHandler.getLongHolder().length() - 1, actualFieldLength);
+//    }
+
+    //     Ввод в поле "Владелец" значения менее 2 букв
+    @Test
+    public void shouldShowErrorMessageForShotHolder() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+        PageElements.HOLDER_FIELD.setValue(DataHandler.getShortHolder());
+        paymentPage.sendEmptyForm();
+        PageElements.HOLDER_FIELD.shouldBe(Condition.visible);
+    }
+
+    //    Отправка формы оплаты с пустым полем "CVC/CVV"
+    @Test
+    public void shouldShowErrorMessageForEmptyCvc() {
+        var paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.CVV_FIELD);
+        paymentPage.sendEmptyForm();
+        PageElements.CVV_ERROR.shouldBe(Condition.visible);
     }
 
     //    Ввод не цифровых значений в поле "CVC/CVV"
