@@ -1,10 +1,12 @@
 package ru.netology.qadiplom.test;
 
 import com.codeborne.selenide.Condition;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.qadiplom.data.DataHandler;
+import ru.netology.qadiplom.data.SqlHandler;
 import ru.netology.qadiplom.page.MainPage;
 import ru.netology.qadiplom.page.PageElements;
 
@@ -22,6 +24,11 @@ public class WebUITest {
     void openMainPage() {
         open("http://localhost:8080/");
         mainPage = new MainPage();
+    }
+
+    @AfterAll
+    public static void cleanAllTables(){
+        SqlHandler.cleanAllTables();
     }
 
     @Test
@@ -135,7 +142,7 @@ public class WebUITest {
         PageElements.MONTH_ERROR.shouldBe(Condition.visible);
     }
 
-    //    Ввод значения меньше 1 в поле "Месяц"
+//    //    Ввод значения меньше 1 в поле "Месяц"
 //    @Test
 //    public void shouldShowErrorMessageForMonthBelowOne() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
@@ -221,7 +228,7 @@ public class WebUITest {
         PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
     }
 
-    //    Ввод в поле "Владелец" значений буквами не латинского алфавита
+//    //    Ввод в поле "Владелец" значений буквами не латинского алфавита
 //    @Test
 //    public void shouldShowErrorMessageForInvalidHolder() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
@@ -231,8 +238,8 @@ public class WebUITest {
 //        paymentPage.sendEmptyForm();
 //        PageElements.HOLDER_ERROR.shouldBe(Condition.visible);
 //    }
-
-    //    Ввод в поле "Владелец" значения с использованием специальных символов, исключая дефис
+//
+//    //    Ввод в поле "Владелец" значения с использованием специальных символов, исключая дефис
 //    @Test
 //    public void shouldShowErrorMessageForSymbolsInHolder() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
@@ -254,7 +261,7 @@ public class WebUITest {
         PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-    //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
+//    //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
 //    @Test
 //    public void shouldLimitLongHolder() {
 //        var paymentPage = mainPage.navigateToPaymentPage();

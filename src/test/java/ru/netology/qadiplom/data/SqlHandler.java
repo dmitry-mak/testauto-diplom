@@ -2,11 +2,13 @@ package ru.netology.qadiplom.data;
 
 import lombok.SneakyThrows;
 import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.MapHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class SqlHandler {
 
@@ -31,14 +33,14 @@ public class SqlHandler {
     }
 
     @SneakyThrows
-    public static String getPaymentStatus(){
+    public static String getPaymentStatus() {
         var sqlQuery = "SELECT status FROM payment_entity ORDER BY created DESC LIMIT 1;";
         var connection = getConnection();
         return runner.query(connection, sqlQuery, new ScalarHandler<>());
     }
 
     @SneakyThrows
-    public static String getCreditStatus(){
+    public static String getCreditStatus() {
         var sqlQuery = "SELECT status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
         var connection = getConnection();
         return runner.query(connection, sqlQuery, new ScalarHandler<>());
@@ -58,4 +60,27 @@ public class SqlHandler {
         }
     }
 
+    @SneakyThrows
+    public static Map<String, Object> getAllPaymentEntityFields() {
+//        var runner = new QueryRunner();
+        var sqlQuery = "SELECT id, amount, created, status, transaction_id FROM payment_entity ORDER BY created DESC LIMIT 1;";
+        var connection = getConnection();
+
+        return runner.query(connection, sqlQuery, new MapHandler());
+    }
+
+    @SneakyThrows
+    public static Map<String, Object> getAllCreditRequestEntityFields() {
+        var sqlQuery = "SELECT id, bank_id, created, status FROM credit_request_entity ORDER BY created DESC LIMIT 1;";
+        var connection = getConnection();
+
+        return runner.query(connection, sqlQuery, new MapHandler());
+    }
+
+    @SneakyThrows
+    public static Map<String, Object> getAllOrderEntityFields() {
+        var sqlQuery = "SELECT id, created, credit_id, payment_id FROM order_entity ORDER BY created DESC LIMIT 1;";
+        var connection = getConnection();
+        return runner.query(connection, sqlQuery, new MapHandler());
+    }
 }
