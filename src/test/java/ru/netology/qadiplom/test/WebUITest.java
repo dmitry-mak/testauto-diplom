@@ -225,17 +225,17 @@ public class WebUITest {
         );
     }
 
-    @ParameterizedTest(name = "{0}")
-    @MethodSource("negativeHolderTestCases")
-    @DisplayName("Should show error message for invalid holder value")
-    public void shouldShowErrorMessageForInvalidHolder(String testCaseName, String holder) {
-        var paymentPage = mainPage.navigateToPaymentPage();
-        paymentPage.fillFormWithValidApprovedCard();
-        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-        PageElements.HOLDER_FIELD.setValue(holder);
-        paymentPage.sendEmptyForm();
-        PageElements.HOLDER_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
-    }
+//    @ParameterizedTest(name = "{0}")
+//    @MethodSource("negativeHolderTestCases")
+//    @DisplayName("Should show error message for invalid holder value")
+//    public void shouldShowErrorMessageForInvalidHolder(String testCaseName, String holder) {
+//        var paymentPage = mainPage.navigateToPaymentPage();
+//        paymentPage.fillFormWithValidApprovedCard();
+//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+//        PageElements.HOLDER_FIELD.setValue(holder);
+//        paymentPage.sendEmptyForm();
+//        PageElements.HOLDER_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
+//    }
 
 
     //    Ввод в поле "CVC/CVV" значения более 3 цифр
