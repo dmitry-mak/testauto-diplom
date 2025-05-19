@@ -23,12 +23,12 @@ public class ApiTest {
         Assertions.assertEquals("DECLINED", ApiHandler.sendRequestValidDeclinedPayment());
     }
 
-//    // Отправка POST запроса с валидными данными и номером карты, незарегистрированным в системе
-//    @Test
-//    @DisplayName("Should send '500' response code for the form with valid data and unregistered card")
-//    public void shouldSendPaymentRequestUnregisteredCard() {
-//        Assertions.assertEquals("500", ApiHandler.sendRequestUnregisteredPayment());
-//    }
+    // Отправка POST запроса с валидными данными и номером карты, незарегистрированным в системе
+    @Test
+    @DisplayName("Should send '500' response code for the form with valid data and unregistered card")
+    public void shouldSendPaymentRequestUnregisteredCard() {
+        Assertions.assertEquals("500", ApiHandler.sendRequestUnregisteredPayment());
+    }
 
     //    Отправка POST запроса с валидными данными и картой со статусом APPROVED на оплату кредитом
     @Test
