@@ -235,6 +235,7 @@ public class WebUITest {
 //        PageElements.HOLDER_FIELD.setValue(holder);
 //        paymentPage.sendEmptyForm();
 //        PageElements.HOLDER_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
+//
 //    }
 
 
