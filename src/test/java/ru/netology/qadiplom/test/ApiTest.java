@@ -25,44 +25,49 @@ public class ApiTest {
 
     // Отправка POST запроса с валидными данными и номером карты, незарегистрированным в системе
     @Test
-    @DisplayName("Should send '500' response code for the form with valid data and unregistered card")
+    @DisplayName("Should get '500' response code for the form with valid data and unregistered card")
     public void shouldSendPaymentRequestUnregisteredCard() {
         Assertions.assertEquals("500", ApiHandler.sendRequestUnregisteredPayment());
     }
 
     //    Отправка POST запроса с валидными данными и картой со статусом APPROVED на оплату кредитом
     @Test
-    @DisplayName("Оплата в кредит картой со статусом APPROVED")
+    @DisplayName("Successful credit for the form with valid data and APPROVED status card")
     public void shouldSendValidCreditRequestApprovedCard() {
         Assertions.assertEquals("APPROVED", ApiHandler.sendRequestValidApprovedCredit());
     }
 
     //    Отправка POST запроса с валидными данными и картой со статусом DECLINED на оплату кредитом
     @Test
+    @DisplayName("Rejected credit for the form with valid data and DECLINED status card")
     public void shouldSendValidCreditRequestDeclinedCard() {
         Assertions.assertEquals("DECLINED", ApiHandler.sendRequestValidDeclinedCredit());
     }
 
     //    Отправка POST запроса с валидными данными и номером карты, незарегистрированным в системе
     @Test
+    @DisplayName("Should get '500' response code for the form with valid data and unregistered card")
     public void shouldSendCreditRequestUnregisteredCard() {
         Assertions.assertEquals("500", ApiHandler.sendRequestUnregisteredCredit());
     }
 
-    //    Должен возвращать код ошибки 500 если отослать запрос на оплату с пустым полем number
+    //    Должен возвращать код ошибки 500 при отправке запроса на оплату с пустым полем number
     @Test
+    @DisplayName("Should get '500' response code for the payment form with empty 'card' field")
     public void shouldSendPaymentRequestWithEmptyNumber() {
         Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyNumber());
     }
 
     //    Отправка пустого POST запроса на оплату картой
     @Test
+    @DisplayName("Should get '500' response code for the empty payment form")
     public void shouldSendPaymentRequestWithEmptyJSON() {
         Assertions.assertEquals("500", ApiHandler.sendEmptyPaymentRequest());
     }
 
     //    Отправка пустого POST запроса на оплату кредитом
     @Test
+    @DisplayName("Should get '500' response code for the empty credit form")
     public void shouldSendCreditRequestWithEmptyJSON() {
         Assertions.assertEquals("500", ApiHandler.sendEmptyCreditRequest());
     }

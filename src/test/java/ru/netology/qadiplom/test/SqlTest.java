@@ -2,6 +2,7 @@ package ru.netology.qadiplom.test;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.qadiplom.data.ApiHandler;
 import ru.netology.qadiplom.data.SqlHandler;
@@ -19,6 +20,7 @@ public class SqlTest {
 
 
     @Test
+    @DisplayName("'payment_entity' table fields should not be null after payment")
     public void paymentEntityFieldsShouldBeNotNull() {
         ApiHandler.sendRequestValidApprovedPayment();
         Map<String, Object> paymentEntityData = SqlHandler.getAllPaymentEntityFields();
@@ -32,8 +34,9 @@ public class SqlTest {
     }
 
     @Test
+    @DisplayName("'order_entity' table fields should not be null after payment or credit")
     public void orderRequestEntityFieldsShouldBeNotNull() {
-        ApiHandler.sendRequestValidApprovedPayment();
+        ApiHandler.sendRequestValidApprovedCredit();
         Map<String, Object> orderEntityData = SqlHandler.getAllOrderEntityFields();
         assertAll(
                 () -> Assertions.assertNotNull(orderEntityData.get("id"), "'id' field should not be null"),
@@ -44,6 +47,7 @@ public class SqlTest {
     }
 
     @Test
+    @DisplayName("'credit_request_entity' table fields should not be null after credit")
     public void creditRequestEntityFieldsShouldBeNotNull() {
         ApiHandler.sendRequestValidApprovedCredit();
         Map<String, Object> creditEntityData = SqlHandler.getAllCreditRequestEntityFields();
@@ -56,6 +60,7 @@ public class SqlTest {
     }
 
     @Test
+    @DisplayName("'payment_id' and 'transaction_id' fields should be equal")
     public void transactionIdAndPaymentIdShouldBeEqual() {
         ApiHandler.sendRequestValidApprovedPayment();
         Map<String, Object> paymentEntityData = SqlHandler.getAllPaymentEntityFields();
@@ -64,6 +69,7 @@ public class SqlTest {
     }
 
     @Test
+    @DisplayName("'payment_id' and 'bank_id' fields should be equal ")
     public void bankIdAndPaymentIdShouldBeEqual() {
         ApiHandler.sendRequestValidApprovedCredit();
         Map<String, Object> creditEntityData = SqlHandler.getAllCreditRequestEntityFields();

@@ -33,6 +33,7 @@ public class WebUITest {
     }
 
     @Test
+    @DisplayName("Multiple error notification for the empty payment form")
     public void shouldShowMultipleErrorMessagesForEmptyForm() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendEmptyForm();
@@ -47,6 +48,7 @@ public class WebUITest {
 
     //    Ввод более 16 символов в поле "Номер карты"
     @Test
+    @DisplayName("'Card number' field limit - 16 digits")
     public void shouldLimitCardNumberLength() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -58,6 +60,7 @@ public class WebUITest {
 
     //    Отправка формы с полем "Номер карты", заполненным номером незарегистрированной карты
     @Test
+    @DisplayName("Should get error notification for unregistered card")
     public void shouldShowErrorMessageForInvalidCardNumber() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -90,6 +93,7 @@ public class WebUITest {
 
     //    Ввод значения месяца из прошедшего периода (текущий год, месяц меньше текущего)
     @Test
+    @DisplayName("Error notification for past month (current year)")
     public void shouldShowErrorMessageForPastMonth() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -104,6 +108,7 @@ public class WebUITest {
     //    Ввод не цифровых значений в поле "Месяц"
     //    проверяет, что поле не реагирует на ввод при попытке вводить не цифровые значения
     @Test
+    @DisplayName("'Month' field accept only digits")
     public void shouldShowErrorMessageForLettersInMonth() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -115,6 +120,7 @@ public class WebUITest {
 
     //    Ввод значения больше 12 в поле "Месяц"
     @Test
+    @DisplayName("Error notification for the month more 12")
     public void shouldShowErrorMessageForInvalidMonth() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -149,6 +155,7 @@ public class WebUITest {
     //    Ввод не цифровых значений в поле "Год"
     //    проверяет, что поле не реагирует на ввод при попытке вводить не цифровые значения
     @Test
+    @DisplayName("'Year' field should accept only digits")
     public void shouldShowErrorMessageForLettersInYear() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -161,6 +168,7 @@ public class WebUITest {
 
     //    Ввод в поле "Год" более 2 цифр
     @Test
+    @DisplayName("Year should be limited by 2 digits")
     public void shouldLimitYearFieldWithTwoDigits() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -196,6 +204,7 @@ public class WebUITest {
 
     //    Ввод в поле "Владелец" двойной фамилии через дефис
     @Test
+    @DisplayName("Should accept double surname with hyphen ")
     public void shouldProcessValidHolderWithHyphen() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -207,6 +216,7 @@ public class WebUITest {
 
 //    //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
 //    @Test
+//      @DisplayName("'Holder' field should be limited by 20 digits")
 //    public void shouldLimitLongHolder() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
 //        paymentPage.fillFormWithValidApprovedCard();
@@ -240,6 +250,7 @@ public class WebUITest {
 
     //    Ввод в поле "CVC/CVV" значения более 3 цифр
     @Test
+    @DisplayName("'CVC' field should be limited by 3 digits")
     public void shouldLimitLongCVC() {
         var paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
@@ -270,7 +281,8 @@ public class WebUITest {
     }
 
 //    @Test
-//    public void shouldShowOnlyErrorNotificationForDeclinedCard() {
+//        @DisplayName("Only error notification should be for the payment with declined card")
+//        public void shouldShowOnlyErrorNotificationForDeclinedCard() {
 //        var paymentPage = mainPage.navigateToPaymentPage();
 //        paymentPage.fillFormWithValidApprovedCard();
 //        paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
