@@ -1,4 +1,4 @@
-package ru.netology.qadiplom.page;
+/* package ru.netology.qadiplom.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -42,3 +42,4 @@ public class CreditPage {
         field.contextClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
     }
 }
+*/

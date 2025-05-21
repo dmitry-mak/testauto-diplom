@@ -1,4 +1,4 @@
-/* package ru.netology.qadiplom.test;
+package ru.netology.qadiplom.test;
 
 import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.*;
@@ -7,9 +7,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import ru.netology.qadiplom.data.DataHandler;
 import ru.netology.qadiplom.data.SqlHandler;
-import ru.netology.qadiplom.page.MainPage;
+import ru.netology.qadiplom.page.MainPageNew;
 import ru.netology.qadiplom.page.PageElements;
-
+import ru.netology.qadiplom.page.TransferPage;
 
 import java.time.Duration;
 import java.util.stream.Stream;
@@ -17,14 +17,14 @@ import java.util.stream.Stream;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class WebUITest {
+public class WebUITestNew {
 
-    MainPage mainPage;
+    MainPageNew mainPage;
 
     @BeforeEach
     void openMainPage() {
         open("http://localhost:8080/");
-        mainPage = new MainPage();
+        mainPage = new MainPageNew();
     }
 
     @AfterAll
@@ -35,7 +35,7 @@ public class WebUITest {
     @Test
     @DisplayName("Multiple error notification for the empty payment form")
     public void shouldShowMultipleErrorMessagesForEmptyForm() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendForm();
 
         assertAll(() -> PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible),
@@ -45,12 +45,11 @@ public class WebUITest {
                 () -> PageElements.CVV_ERROR.shouldBe(Condition.visible));
     }
 
-
     //    Ввод более 16 символов в поле "Номер карты"
     @Test
     @DisplayName("'Card number' field limit - 16 digits")
     public void shouldLimitCardNumberLength() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
         PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getLongCardNumber());
@@ -62,7 +61,7 @@ public class WebUITest {
     @Test
     @DisplayName("Should get error notification for unregistered card")
     public void shouldShowErrorMessageForInvalidCardNumber() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
         PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getUnregisteredCard().getNumber());
@@ -82,7 +81,7 @@ public class WebUITest {
     @MethodSource("negativeCardNumberTestCases")
     @DisplayName("Should show error message for invalid card number")
     public void shouldShowErrorMessageForInvalidCardNumber(String testCaseName, String cardNumber) {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
         PageElements.CARD_NUMBER_FIELD.setValue(cardNumber);
@@ -90,12 +89,11 @@ public class WebUITest {
         PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-
     //    Ввод значения месяца из прошедшего периода (текущий год, месяц меньше текущего)
     @Test
     @DisplayName("Error notification for past month (current year)")
     public void shouldShowErrorMessageForPastMonth() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.MONTH_FIELD);
         paymentPage.cleanField(PageElements.YEAR_FIELD);
@@ -110,7 +108,7 @@ public class WebUITest {
     @Test
     @DisplayName("'Month' field accept only digits")
     public void shouldShowErrorMessageForLettersInMonth() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.MONTH_FIELD);
         PageElements.MONTH_FIELD.setValue(DataHandler.getLettersMonth());
@@ -122,7 +120,7 @@ public class WebUITest {
     @Test
     @DisplayName("Error notification for the month more 12")
     public void shouldShowErrorMessageForInvalidMonth() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.MONTH_FIELD);
         PageElements.MONTH_FIELD.setValue(DataHandler.getInvalidMonth());
@@ -135,7 +133,7 @@ public class WebUITest {
                 Arguments.arguments("Empty month field", ""),
                 Arguments.arguments("Letters in month field", DataHandler.getLettersMonth()),
                 Arguments.arguments("Invalid month value bigger 12", DataHandler.getInvalidMonth())
-//                Arguments.arguments("Too short month value smaller 1",DataHandler.getShortMonth())
+//                Arguments.arguments("Too short month value equals 00", DataHandler.getShortMonth())
         );
     }
 
@@ -143,7 +141,7 @@ public class WebUITest {
     @MethodSource("negativeMonthTestCases")
     @DisplayName("Should show error message for invalid month value")
     public void shouldShowErrorMessageForInvalidMonth(String testCaseName, String month) {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.MONTH_FIELD);
         PageElements.MONTH_FIELD.setValue(month);
@@ -151,13 +149,12 @@ public class WebUITest {
         PageElements.MONTH_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-
     //    Ввод не цифровых значений в поле "Год"
     //    проверяет, что поле не реагирует на ввод при попытке вводить не цифровые значения
     @Test
     @DisplayName("'Year' field should accept only digits")
     public void shouldShowErrorMessageForLettersInYear() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.YEAR_FIELD);
         PageElements.YEAR_FIELD.setValue(DataHandler.getLettersYear());
@@ -165,12 +162,11 @@ public class WebUITest {
         Assertions.assertEquals(0, actualFieldLength.length());
     }
 
-
     //    Ввод в поле "Год" более 2 цифр
     @Test
     @DisplayName("Year should be limited by 2 digits")
     public void shouldLimitYearFieldWithTwoDigits() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.YEAR_FIELD);
         PageElements.YEAR_FIELD.setValue(DataHandler.getLongYear());
@@ -193,7 +189,7 @@ public class WebUITest {
     @MethodSource("negativeYearTestCases")
     @DisplayName("Should show error message for invalid year value")
     public void shouldShowErrorMessageForInvalidYear(String testCaseName, String year) {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.YEAR_FIELD);
         PageElements.YEAR_FIELD.setValue(year);
@@ -201,12 +197,11 @@ public class WebUITest {
         PageElements.YEAR_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-
     //    Ввод в поле "Владелец" двойной фамилии через дефис
     @Test
     @DisplayName("Should accept double surname with hyphen ")
     public void shouldProcessValidHolderWithHyphen() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.HOLDER_FIELD);
         PageElements.HOLDER_FIELD.setValue(DataHandler.getValidHolderWithHyphen());
@@ -216,9 +211,9 @@ public class WebUITest {
 
 //    //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
 //    @Test
-//      @DisplayName("'Holder' field should be limited by 20 digits")
+//    @DisplayName("'Holder' field should be limited by 20 digits")
 //    public void shouldLimitLongHolder() {
-//        var paymentPage = mainPage.navigateToPaymentPage();
+//        TransferPage paymentPage = mainPage.navigateToPaymentPage();
 //        paymentPage.fillFormWithValidApprovedCard();
 //        paymentPage.cleanField(PageElements.HOLDER_FIELD);
 //        PageElements.HOLDER_FIELD.setValue(DataHandler.getLongHolder());
@@ -239,7 +234,7 @@ public class WebUITest {
     @MethodSource("negativeHolderTestCases")
     @DisplayName("Should show error message for invalid holder value")
     public void shouldShowErrorMessageForInvalidHolder(String testCaseName, String holder) {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.HOLDER_FIELD);
         PageElements.HOLDER_FIELD.setValue(holder);
@@ -247,12 +242,11 @@ public class WebUITest {
         PageElements.HOLDER_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-
     //    Ввод в поле "CVC/CVV" значения более 3 цифр
     @Test
     @DisplayName("'CVC' field should be limited by 3 digits")
     public void shouldLimitLongCVC() {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CVV_FIELD);
         PageElements.CVV_FIELD.setValue(DataHandler.getLongCvc());
@@ -272,7 +266,7 @@ public class WebUITest {
     @MethodSource("negativeCvcTestCases")
     @DisplayName("Should show error message for invalid CVC value")
     public void shouldShowErrorMessageForInvalidCvc(String testCaseName, String cvc) {
-        var paymentPage = mainPage.navigateToPaymentPage();
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.fillFormWithValidApprovedCard();
         paymentPage.cleanField(PageElements.CVV_FIELD);
         PageElements.CVV_FIELD.setValue(cvc);
@@ -281,18 +275,15 @@ public class WebUITest {
     }
 
 //    @Test
-//        @DisplayName("Only error notification should be for the payment with declined card")
-//        public void shouldShowOnlyErrorNotificationForDeclinedCard() {
-//        var paymentPage = mainPage.navigateToPaymentPage();
+//    @DisplayName("Only error notification should be for the payment with declined card")
+//    public void shouldShowOnlyErrorNotificationForDeclinedCard() {
+//        TransferPage paymentPage = mainPage.navigateToPaymentPage();
 //        paymentPage.fillFormWithValidApprovedCard();
 //        paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
 //        PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getUnregisteredCard().getNumber());
-//        paymentPage.sendEmptyForm();
+//        paymentPage.sendForm();
 //        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
 //        PageElements.CLOSE_NOTIFICATION_BUTTON.click();
 //        PageElements.SUCCESS_NOTIFICATION.shouldNot(Condition.visible);
 //    }
 }
-
-
- */

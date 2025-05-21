@@ -1,4 +1,4 @@
-/*package ru.netology.qadiplom.page;
+package ru.netology.qadiplom.page;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
@@ -7,10 +7,19 @@ import ru.netology.qadiplom.data.DataHandler;
 
 import java.time.Duration;
 
-public class PaymentPage {
+public class TransferPage {
 
-    public PaymentPage() {
-        PageElements.HEADER_PAYMENT.shouldBe(Condition.visible, Duration.ofSeconds(10));
+    public enum TransactionType{
+        PAYMENT,
+        CREDIT
+    }
+
+    public TransferPage(TransactionType type) {
+        if (type==TransactionType.PAYMENT){
+            PageElements.HEADER_PAYMENT.shouldBe(Condition.visible, Duration.ofSeconds(10));
+        }else {
+            PageElements.HEADER_CREDIT.shouldBe(Condition.visible,Duration.ofSeconds(10));
+        }
     }
 
     public void sendFormWithValidApprovedCard() {
@@ -59,6 +68,3 @@ public class PaymentPage {
         field.contextClick().sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
     }
 }
-
-
- */
