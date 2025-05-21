@@ -10,16 +10,10 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class PageElements {
 
-//    public static final SelenideElement CARD_NUMBER_FIELD = $(byText("Номер карты")).parent().$(".input__control");
-//    public static final SelenideElement MONTH_FIELD = $(byText("Месяц")).parent().$(".input__control");
-//    public static final SelenideElement YEAR_FIELD = $(byText("Год")).parent().$(".input__control");
     public static final SelenideElement HOLDER_FIELD = $(byText("Владелец")).parent().$(".input__control");
-//    public static final SelenideElement CVV_FIELD = $(byText("CVC/CVV")).parent().$(".input__control");
-
     public static final SelenideElement CARD_NUMBER_FIELD = $(".input__control[placeholder='0000 0000 0000 0000']");
     public static final SelenideElement MONTH_FIELD = $(".input__control[placeholder='08']");
     public static final SelenideElement YEAR_FIELD = $(".input__control[placeholder='22']");
-//    public static final SelenideElement HOLDER_FIELD = $(".input__control[placeholder='Владелец']");
     public static final SelenideElement CVV_FIELD = $(".input__control[placeholder='999']");
 
     public static final SelenideElement BUY_BUTTON = $(".button:not(.button_view_extra)").shouldBe(Condition.visible);

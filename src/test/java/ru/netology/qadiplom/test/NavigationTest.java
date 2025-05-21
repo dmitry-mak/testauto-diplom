@@ -1,5 +1,4 @@
-/* package ru.netology.qadiplom.test;
-
+package ru.netology.qadiplom.test;
 
 import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.qadiplom.page.MainPage;
 import ru.netology.qadiplom.page.PageElements;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class NavigationTest {
@@ -41,4 +40,3 @@ public class NavigationTest {
         mainPage.navigateToCreditPage();
     }
 }
-*/

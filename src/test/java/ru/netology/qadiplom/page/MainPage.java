@@ -1,18 +1,14 @@
-/* package ru.netology.qadiplom.page;
-
+package ru.netology.qadiplom.page;
 
 public class MainPage {
 
-    public PaymentPage navigateToPaymentPage() {
+    public TransferPage navigateToPaymentPage() {
         PageElements.BUY_BUTTON.click();
-        return new PaymentPage();
+        return new TransferPage(TransferPage.TransactionType.PAYMENT);
     }
 
-    public CreditPage navigateToCreditPage() {
+    public TransferPage navigateToCreditPage() {
         PageElements.CREDIT_BUTTON.click();
-        return new CreditPage();
+        return new TransferPage(TransferPage.TransactionType.CREDIT);
     }
-
 }
-
- */
