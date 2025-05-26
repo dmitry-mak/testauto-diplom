@@ -2,6 +2,7 @@ package ru.netology.qadiplom.test;
 
 import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.netology.qadiplom.page.MainPage;
 import ru.netology.qadiplom.page.PageElements;
@@ -28,6 +29,7 @@ public class NavigationTest {
                 () -> PageElements.HEADER_MAINPAGE.shouldBe(Condition.visible));
 
     }
+
     // Переход к форме оплаты картой
     @Test
     public void shouldOpenPaymentPage() {
