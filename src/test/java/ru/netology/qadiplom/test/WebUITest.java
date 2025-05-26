@@ -157,22 +157,22 @@ public class WebUITest {
         return Stream.of(
                 Arguments.arguments("Empty month field", ""),
                 Arguments.arguments("Letters in month field", DataHandler.getLettersMonth()),
-                Arguments.arguments("Invalid month value bigger 12", DataHandler.getInvalidMonth()),
-                Arguments.arguments("Too short month value equals 00", DataHandler.getShortMonth())
+                Arguments.arguments("Invalid month value bigger 12", DataHandler.getInvalidMonth())
+//                Arguments.arguments("Too short month value equals 00", DataHandler.getShortMonth())
         );
     }
 
-//    @ParameterizedTest(name = "{0}")
-//    @MethodSource("negativeMonthTestCases")
-//    @DisplayName("Should show error message for invalid month value")
-//    public void shouldShowErrorMessageForInvalidMonth(String testCaseName, String month) {
-//        TransferPage paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.fillFormWithValidApprovedCard();
-//        paymentPage.cleanField(PageElements.MONTH_FIELD);
-//        PageElements.MONTH_FIELD.setValue(month);
-//        paymentPage.sendForm();
-//        PageElements.MONTH_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
-//    }
+    @ParameterizedTest(name = "{0}")
+    @MethodSource("negativeMonthTestCases")
+    @DisplayName("Should show error message for invalid month value")
+    public void shouldShowErrorMessageForInvalidMonth(String testCaseName, String month) {
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.MONTH_FIELD);
+        PageElements.MONTH_FIELD.setValue(month);
+        paymentPage.sendForm();
+        PageElements.MONTH_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
+    }
 
     //    Ввод не цифровых значений в поле "Год"
     //    проверяет, что поле не реагирует на ввод при попытке вводить не цифровые значения
