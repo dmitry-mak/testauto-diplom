@@ -1,6 +1,7 @@
 package ru.netology.qadiplom.test;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,6 +13,7 @@ import ru.netology.qadiplom.page.PageElements;
 import ru.netology.qadiplom.page.TransferPage;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Selenide.open;
@@ -33,16 +35,26 @@ public class WebUITest {
     }
 
     @Test
-    @DisplayName("Multiple error notification for the empty payment form")
-    public void shouldShowMultipleErrorMessagesForEmptyForm() {
+    @DisplayName("Equal multiple error notification for the empty payment form")
+    public void shouldShowSameMultipleErrorMessagesForEmptyForm() {
+        String emptyFieldNotificationMessage = "Поле обязательно для заполнения";
+
+        SelenideElement[] formFields = {
+//                PageElements.CARD_NUMBER_ERROR,
+//                PageElements.MONTH_ERROR,
+//                PageElements.YEAR_ERROR,
+                PageElements.HOLDER_ERROR
+//                PageElements.CVV_ERROR
+        };
+
         TransferPage paymentPage = mainPage.navigateToPaymentPage();
         paymentPage.sendForm();
 
-        assertAll(() -> PageElements.CARD_NUMBER_ERROR.shouldBe(Condition.visible),
-                () -> PageElements.MONTH_ERROR.shouldBe(Condition.visible),
-                () -> PageElements.YEAR_ERROR.shouldBe(Condition.visible),
-                () -> PageElements.HOLDER_ERROR.shouldBe(Condition.visible),
-                () -> PageElements.CVV_ERROR.shouldBe(Condition.visible));
+        assertAll(Arrays.stream(formFields)
+                .map(error -> () -> error
+                        .shouldBe(Condition.visible)
+                        .shouldHave(Condition.text(emptyFieldNotificationMessage))));
+
     }
 
     @Test
