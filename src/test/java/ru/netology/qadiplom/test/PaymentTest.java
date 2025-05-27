@@ -37,15 +37,15 @@ public class PaymentTest {
                 () -> Assertions.assertEquals("APPROVED", SqlHandler.getPaymentStatus()));
     }
 
-//    @Test
-//    public void shouldGetErrorPayNotificationWithDeclinedCard() {
-//
-//        TransferPage paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.sendFormWithDeclinedCard();
-//        assertAll(
-//                () -> PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
-//                () -> Assertions.assertEquals("DECLINED", SqlHandler.getPaymentStatus()));
-//    }
+    @Test
+    public void shouldGetErrorPayNotificationWithDeclinedCard() {
+
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.sendFormWithDeclinedCard();
+        assertAll(
+                () -> PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
+                () -> Assertions.assertEquals("DECLINED", SqlHandler.getPaymentStatus()));
+    }
 
     @Test
     public void shouldGetErrorPayNotificationForUnregisteredCard() {
@@ -62,14 +62,14 @@ public class PaymentTest {
                 () -> Assertions.assertEquals("APPROVED", SqlHandler.getCreditStatus()));
     }
 
-//    @Test
-//    public void shouldGetErrorCreditNotificationForDeclinedCard() {
-//        TransferPage creditPage = mainPage.navigateToCreditPage();
-//        creditPage.sendFormWithDeclinedCard();
-//        assertAll(
-//                () -> PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
-//                () -> Assertions.assertEquals("DECLINED", SqlHandler.getCreditStatus()));
-//    }
+    @Test
+    public void shouldGetErrorCreditNotificationForDeclinedCard() {
+        TransferPage creditPage = mainPage.navigateToCreditPage();
+        creditPage.sendFormWithDeclinedCard();
+        assertAll(
+                () -> PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15)),
+                () -> Assertions.assertEquals("DECLINED", SqlHandler.getCreditStatus()));
+    }
 
     @Test
     public void shouldGetErrorCreditNotificationForUnregisteredCard() {

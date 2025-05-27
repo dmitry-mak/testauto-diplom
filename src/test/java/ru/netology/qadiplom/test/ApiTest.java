@@ -72,30 +72,30 @@ public class ApiTest {
         Assertions.assertEquals("500", ApiHandler.sendEmptyCreditRequest());
     }
 
-//    //    Должен возвращать код ошибки 500 если отослать запрос на оплату с пустым полем month
-//    @Test
-//    @DisplayName("Should send '500' response code for the form with empty 'month' field")
-//    public void shouldSendPaymentRequestWithEmptyMonth() {
-//        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyMonth());
-//    }
-//
-//    @Test
-//    @DisplayName("Should send '500' response code for the form with empty 'year' field")
-//    public void shouldSendPaymentRequestWithEmptyYear() {
-//        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyYear());
-//    }
-//
-//    @Test
-//    @DisplayName("Should send '500' response code for the form with empty 'holder' field")
-//    public void shouldSendPaymentRequestWithEmptyHolder() {
-//        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyHolder());
-//    }
-//
-//    @Test
-//    @DisplayName("Should send '500' response code for the form with empty 'CVC' field")
-//    public void shouldSendPaymentRequestWithEmptyCvc() {
-//        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyCvc());
-//    }
+    //    Должен возвращать код ошибки 500 если отослать запрос на оплату с пустым полем month
+    @Test
+    @DisplayName("Should send '500' response code for the form with empty 'month' field")
+    public void shouldSendPaymentRequestWithEmptyMonth() {
+        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyMonth());
+    }
+
+    @Test
+    @DisplayName("Should send '500' response code for the form with empty 'year' field")
+    public void shouldSendPaymentRequestWithEmptyYear() {
+        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyYear());
+    }
+
+    @Test
+    @DisplayName("Should send '500' response code for the form with empty 'holder' field")
+    public void shouldSendPaymentRequestWithEmptyHolder() {
+        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyHolder());
+    }
+
+    @Test
+    @DisplayName("Should send '500' response code for the form with empty 'CVC' field")
+    public void shouldSendPaymentRequestWithEmptyCvc() {
+        Assertions.assertEquals("500", ApiHandler.sendPaymentRequestWithEmptyCvc());
+    }
 
     @AfterAll
     public static void cleanAllTables() {

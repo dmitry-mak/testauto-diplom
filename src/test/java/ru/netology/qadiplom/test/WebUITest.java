@@ -40,11 +40,11 @@ public class WebUITest {
         String emptyFieldNotificationMessage = "Поле обязательно для заполнения";
 
         SelenideElement[] formFields = {
-//                PageElements.CARD_NUMBER_ERROR,
-//                PageElements.MONTH_ERROR,
-//                PageElements.YEAR_ERROR,
-                PageElements.HOLDER_ERROR
-//                PageElements.CVV_ERROR
+                PageElements.CARD_NUMBER_ERROR,
+                PageElements.MONTH_ERROR,
+                PageElements.YEAR_ERROR,
+                PageElements.HOLDER_ERROR,
+                PageElements.CVV_ERROR
         };
 
         TransferPage paymentPage = mainPage.navigateToPaymentPage();
@@ -63,7 +63,7 @@ public class WebUITest {
         String cssClasForButtonRedFill = "button_view_extra";
         mainPage.navigateToCreditPage();
         assertAll(
-//                ()->PageElements.BUY_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill)),
+                ()->PageElements.BUY_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill)),
                 () -> PageElements.CREDIT_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill)),
                 () -> PageElements.CONTINUE_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill))
 
@@ -157,8 +157,8 @@ public class WebUITest {
         return Stream.of(
                 Arguments.arguments("Empty month field", ""),
                 Arguments.arguments("Letters in month field", DataHandler.getLettersMonth()),
-                Arguments.arguments("Invalid month value bigger 12", DataHandler.getInvalidMonth())
-//                Arguments.arguments("Too short month value equals 00", DataHandler.getShortMonth())
+                Arguments.arguments("Invalid month value bigger 12", DataHandler.getInvalidMonth()),
+                Arguments.arguments("Too short month value equals 00", DataHandler.getShortMonth())
         );
     }
 
@@ -234,24 +234,24 @@ public class WebUITest {
         PageElements.SUCCESS_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-//    //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
-//    @Test
-//    @DisplayName("'Holder' field should be limited by 20 digits")
-//    public void shouldLimitLongHolder() {
-//        TransferPage paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.fillFormWithValidApprovedCard();
-//        paymentPage.cleanField(PageElements.HOLDER_FIELD);
-//        PageElements.HOLDER_FIELD.setValue(DataHandler.getLongHolder());
-//        int actualFieldLength = PageElements.HOLDER_FIELD.getValue().length();
-//        Assertions.assertEquals(DataHandler.getLongHolder().length() - 1, actualFieldLength);
-//    }
+    //    Ввод в поле "Владелец" значения длиннее максимально допустимого (20+)
+    @Test
+    @DisplayName("'Holder' field should be limited by 20 digits")
+    public void shouldLimitLongHolder() {
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.HOLDER_FIELD);
+        PageElements.HOLDER_FIELD.setValue(DataHandler.getLongHolder());
+        int actualFieldLength = PageElements.HOLDER_FIELD.getValue().length();
+        Assertions.assertEquals(DataHandler.getLongHolder().length() - 1, actualFieldLength);
+    }
 
     private static Stream<Arguments> negativeHolderTestCases() {
         return Stream.of(
-                Arguments.arguments("Empty 'holder' field", "")
-//                Arguments.arguments("Holder with non-latin alphabet", DataHandler.getInvalidRuHolder()),
-//                Arguments.arguments("Holder with special symbols", DataHandler.getHolderWithSymbols()),
-//                Arguments.arguments("Too short 'holder' field value less 2 characters", DataHandler.getShortHolder())
+                Arguments.arguments("Empty 'holder' field", ""),
+                Arguments.arguments("Holder with non-latin alphabet", DataHandler.getInvalidRuHolder()),
+                Arguments.arguments("Holder with special symbols", DataHandler.getHolderWithSymbols()),
+                Arguments.arguments("Too short 'holder' field value less 2 characters", DataHandler.getShortHolder())
         );
     }
 
@@ -299,16 +299,16 @@ public class WebUITest {
         PageElements.CVV_ERROR.shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 
-//    @Test
-//    @DisplayName("Only error notification should be for the payment with declined card")
-//    public void shouldShowOnlyErrorNotificationForDeclinedCard() {
-//        TransferPage paymentPage = mainPage.navigateToPaymentPage();
-//        paymentPage.fillFormWithValidApprovedCard();
-//        paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
-//        PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getUnregisteredCard().getNumber());
-//        paymentPage.sendForm();
-//        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
-//        PageElements.CLOSE_NOTIFICATION_BUTTON.click();
-//        PageElements.SUCCESS_NOTIFICATION.shouldNot(Condition.visible);
-//    }
+    @Test
+    @DisplayName("Only error notification should be for the payment with declined card")
+    public void shouldShowOnlyErrorNotificationForDeclinedCard() {
+        TransferPage paymentPage = mainPage.navigateToPaymentPage();
+        paymentPage.fillFormWithValidApprovedCard();
+        paymentPage.cleanField(PageElements.CARD_NUMBER_FIELD);
+        PageElements.CARD_NUMBER_FIELD.setValue(DataHandler.getUnregisteredCard().getNumber());
+        paymentPage.sendForm();
+        PageElements.ERROR_NOTIFICATION.shouldBe(Condition.visible, Duration.ofSeconds(15));
+        PageElements.CLOSE_NOTIFICATION_BUTTON.click();
+        PageElements.SUCCESS_NOTIFICATION.shouldNot(Condition.visible);
+    }
 }

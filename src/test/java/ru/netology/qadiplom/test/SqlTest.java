@@ -41,7 +41,7 @@ public class SqlTest {
         assertAll(
                 () -> Assertions.assertNotNull(orderEntityData.get("id"), "'id' field should not be null"),
                 () -> Assertions.assertNotNull(orderEntityData.get("created"), "'created' field should not be null"),
-//                () -> Assertions.assertNotNull(orderEntityData.get("credit_id"),"'credit_id' field should not be null"),
+                () -> Assertions.assertNotNull(orderEntityData.get("credit_id"),"'credit_id' field should not be null"),
                 () -> Assertions.assertNotNull(orderEntityData.get("payment_id"), "'payment_id' field should not be null")
         );
     }
