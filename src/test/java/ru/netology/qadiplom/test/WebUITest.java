@@ -63,7 +63,7 @@ public class WebUITest {
         String cssClasForButtonRedFill = "button_view_extra";
         mainPage.navigateToCreditPage();
         assertAll(
-                ()->PageElements.BUY_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill)),
+                () -> PageElements.BUY_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill)),
                 () -> PageElements.CREDIT_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill)),
                 () -> PageElements.CONTINUE_BUTTON.shouldBe(Condition.cssClass(cssClasForButtonRedFill))
 
