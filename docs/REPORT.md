@@ -33,4 +33,15 @@
 - исправить работу базы данных: сейчас поле credit_id никогда не задействовано, и нет документации о том, как оно вообще должно работать
 
 
-**Отчеты, сгенерированные Allure**
+## Отчеты, сгенерированные Allure
+
+### Общий график
+![Allure General Report](https://github.com/dmitry-mak/testauto-diplom/blob/main/docs/allureReports/allureReportGeneral.jpg)
+### Взаимодействия через API
+![Allure API tests Report](https://github.com/dmitry-mak/testauto-diplom/blob/main/docs/allureReports/allureReportAPI.jpg)
+### Взаимодействие через пользовательский интерфейс
+![Allure PAYMENT tests Report](https://github.com/dmitry-mak/testauto-diplom/blob/main/docs/allureReports/allureReportPayment.jpg)
+### Тесты, относящиеся к работе MySQL
+![Allure SQL tests Report](https://github.com/dmitry-mak/testauto-diplom/blob/main/docs/allureReports/allureReportSql.jpg)
+### Тесты пользовательского интерфейса (WebUI)
+![Allure WEBUI tests Report](https://github.com/dmitry-mak/testauto-diplom/blob/main/docs/allureReports/allureReportWebUI.jpg)
